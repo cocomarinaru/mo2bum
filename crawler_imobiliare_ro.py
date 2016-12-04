@@ -1,10 +1,8 @@
 from lxml import html
 import requests
-
-SEARCH_URL = "https://www.imobiliare.ro/vanzare-apartamente/timisoara?pagina={}"
+import constants
 
 MAX_PAGES = 68
-
 
 def crawl():
     apartments = []
@@ -13,18 +11,18 @@ def crawl():
 
     print("Number of apartments:", len(apartments))
     for ap in apartments:
-        print(ap['title'])
+        print(ap)
 
 
 def get_apartments_from_search_results(page):
     apartments = []
-    url = SEARCH_URL.format(page)
+    url = constants.IMOBILIARE_RO['SEARCH_RESULTS_URL'].format(page)
     print("Parsing",page, url)
     response = requests.get(url)
     tree = html.fromstring(response.content)
     # results = tree.xpath("//div[@id='container-lista-rezultate']")
     # posts = tree.xpath("//div[@class='box-anunt']//")
-    post_links = tree.xpath("//h2[@class='titlu-anunt']/a")
+    post_links = tree.xpath(constants.IMOBILIARE_RO['XPATH_APARTMENT_ANCHORS'])
 
     for link in post_links:
         apartment = {}
