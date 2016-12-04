@@ -20,13 +20,13 @@ def crawl():
 
 
 def get_apartments_from_search_results(url):
-    apartments = []
 
     print("Parsing: ", url)
     response = requests.get(url)
     tree = html.fromstring(response.content)
     post_links = tree.xpath(constants.IMOBILIARE_RO['XPATH_APARTMENT_ANCHORS'])
 
+    apartments = []
     for link in post_links:
         apartment = {'title': link.attrib['title'], 'link': link.attrib['href']}
         apartments.append(apartment)
