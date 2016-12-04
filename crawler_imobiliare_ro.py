@@ -1,12 +1,13 @@
 from lxml import html
 import requests
-import constants
+
+from constants import ImobiliareRo
 
 MAX_PAGES = 68
 
 
 def get_search_result_url(page):
-    return constants.IMOBILIARE_RO['SEARCH_RESULTS_URL'].format(page)
+    return ImobiliareRo.SEARCH_RESULTS_URL.format(page)
 
 
 def crawl():
@@ -20,11 +21,10 @@ def crawl():
 
 
 def get_apartments_from_search_results(url):
-
     print("Parsing: ", url)
     response = requests.get(url)
     tree = html.fromstring(response.content)
-    post_links = tree.xpath(constants.IMOBILIARE_RO['XPATH_APARTMENT_ANCHORS'])
+    post_links = tree.xpath(ImobiliareRo.XPATH_APARTMENT_ANCHORS)
 
     apartments = []
     for link in post_links:
