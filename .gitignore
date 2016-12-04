@@ -1,2 +1,4 @@
 misc.xml
 *.iml
+.idea/workspace.xml
+__pycache__/
